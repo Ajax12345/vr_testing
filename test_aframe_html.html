@@ -1,0 +1,84 @@
+<html>
+<script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <body>
+    <a-scene>
+      <a-box position="3 0.5 -3" color="#4CC3D9" height='2' id='mybox'></a-box>
+      <a-box position="-3 0.5 -3" color="#EF2D5E" height = '2' id='mybox1'></a-box>
+    </a-scene>
+
+  </body>
+  <script>
+    $(document).ready(function(){
+      function _min(a, b){
+        if (a > b){
+          return b;
+        }
+        return a;
+      }
+      function screen_obj(id){
+        var sceneEl = document.querySelector('a-scene');
+        this.val = sceneEl.querySelector("#"+id);
+        this.x = this.val.getAttribute('position').x;
+        this.y = this.val.getAttribute('position').y;
+        this.z = this.val.getAttribute('position').z;
+        this.height = this.val.getAttribute("height");
+        //this.flag = true;
+        this.collision = function(obj_new){
+          return Math.abs(this.x-obj_new.x) < this.height && Math.abs(this.y-obj_new.y) < this.height && Math.abs(this.z-obj_new.z) < this.height;
+        }
+        this.updateX = function(val){
+          //setAttribute('position', {x: 1, y: 2, z: 3});
+          this.val.setAttribute('position', {x: val, y: this.y, z: this.z});
+          this.x = val;
+        }
+        this.updateY = function(val){
+          //setAttribute('position', {x: 1, y: 2, z: 3});
+          this.val.setAttribute('position', {x: this.x, y: val, z: this.z});
+          this.y = val;
+        }
+        this.updateZ = function(val){
+          //setAttribute('position', {x: 1, y: 2, z: 3});
+          this.val.setAttribute('position', {x: this.x, y: this.y, z: val});
+          this.z = val;
+        }
+        this.incX = function(){
+          this.val.setAttribute('position', {x: this.x+1, y: this.y, z: this.z});
+          this.x = this.x + 1;
+        }
+        this.incY = function(){
+          this.val.setAttribute('position', {x: this.x, y: this.y+1, z: this.z});
+          this.y = this.y + 1;
+        }
+        this.incZ = function(){
+          this.val.setAttribute('position', {x: this.x, y: this.y, z: this.z+1});
+          this.z = this.z + 1;
+        }
+
+      }
+      function collide(){
+        var new_stuff = new screen_obj("mybox");
+        var new_stuff1 = new screen_obj("mybox1");
+        new_stuff1.incX();
+        if (!new_stuff.collision(new_stuff1)){
+          setTimeout(function(){
+            collide();
+          }, 100)
+        }
+
+
+
+
+
+      }
+      $(document).on('keypress', function(event) {
+          if (event.keyCode == 13) {
+            collide();
+          }
+      });
+
+
+    });
+  </script>
+
+</html>
