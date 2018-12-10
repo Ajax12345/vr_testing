@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <a-scene id='main_scene'>
+      <a-sky src="" rotation="0 -130 0" id='first_room'></a-sky>
+
+
+
+    </a-scene>
+  </body>
+  <script>
+
+    $(document).ready(function(){
+
+      var current = 0;
+      var _last_messages = undefined;
+      var func_commands = undefined;
+      var sequence = {0:["https://raw.githubusercontent.com/Ajax12345/vr_testing/master/Image.png", [{'width':'5', 'message':'Out of order...', 'position':"-1.5 1.2 -1.5", 'rotation':"10 25 5"}, {'message':'Out of order...', 'width':'35', 'rotation':"10 25 2", 'position':"-38 1.2 -1.5"}, {'width':'8', 'message':'Press g to go down the hall', 'position':"0.1 1.6 -1.5", 'rotation':"-10 -6 -20"}], {103:function(){return 1;}}],
+
+      1:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/hallway.png', [{'width':'10', 'message':'Press h to farther down', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'50', 'message':'Press g to go to the handicapped bathrooms', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 2;}, 104:function(){return 4;}}],
+      2:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom_hallway.png', ], 3:'https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom.png',
+      4:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/handicap_hallway.png', ], 
+      5:'https://raw.githubusercontent.com/Ajax12345/vr_testing/master/techsuite.png'};
+      function _main_loop(){
+        var vals = sequence[current];
+        $('#first_room').attr('src', vals[0])
+        if (_last_messages != undefined){
+
+          for (var i = 0; i < _last_messages.length; i++){
+            $('#message'+_last_messages[i]).remove();
+          }
+        }
+
+        var _temp_container = [];
+        func_commands = vals[2];
+        for (var i = 0; i < vals[1].length; i++){
+          var the_html = `
+          <a-text font="kelsonsans" value="${vals[1][i]['message']}" width="${vals[1][i]['width']}" id='message${i+1}' position="${vals[1][i]['position']}"
+                  rotation="${vals[1][i]['rotation']}"></a-text>
+          `;
+          _temp_container.push((i+1).toString());
+          $('#main_scene').append(the_html);
+        }
+        _last_messages = _temp_container;
+
+      }
+      _main_loop();
+      $(document).on('keypress', function(event) {
+
+          current = func_commands[event.keyCode]();
+
+          _main_loop();
+          //alert(event.keyCode);
+      });
+
+
+    });
+  </script>
+</html>
