@@ -18,18 +18,26 @@
       var current = 0;
       var _last_messages = undefined;
       var func_commands = undefined;
-      var sequence = {0:["https://raw.githubusercontent.com/Ajax12345/vr_testing/master/Image.png", [{'width':'5', 'message':'Out of order...', 'position':"-1.5 1.2 -1.5", 'rotation':"10 25 5"}, {'message':'Out of order...', 'width':'35', 'rotation':"10 25 2", 'position':"-38 1.2 -1.5"}, {'width':'8', 'message':'Press g to go down the hall', 'position':"0.1 1.6 -1.5", 'rotation':"-10 -6 -20"}], {103:function(){return 1;}}],
+      var sequence = {0:["https://raw.githubusercontent.com/Ajax12345/vr_testing/master/Image.png", [{'width':'5', 'message':'Out of order...', 'position':"-1.5 1.2 -1.5", 'rotation':"10 25 5"}, {'message':'Out of order...', 'width':'35', 'rotation':"10 25 2", 'position':"-38 1.2 -1.5"}, {'width':'8', 'message':'Press g to go down the hall', 'position':"0.1 1.6 -1.5", 'rotation':"-10 -6 -20"}], {103:function(){return 1;}}, '0 -130 0'],
 
-      1:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/hallway.png', [{'width':'10', 'message':'Press h to farther down', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press g to go to the handicapped bathrooms', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 2;}, 104:function(){return 4;}}],
-      2:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom_hallway.png', ], 3:'https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom.png',
-      4:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/handicap_hallway.png', ],
-      5:'https://raw.githubusercontent.com/Ajax12345/vr_testing/master/techsuite.png'};
+      1:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/hallway.png', [{'width':'10', 'message':'Press g to farther down', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the handicapped bathrooms', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 4;}, 104:function(){return 3;}}, '0 -130 0'],
+      2:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom_hallway.png', [{'width':'100', 'message':'something here', 'position':'0 0 0', 'rotation':'10 25 5'}], {103:function(){return 3;}, 104:function(){return 4;}}, '0 -130 0'],
+      3:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom.png', [{'width':'3', 'message':'Occupied', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Occupied', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}, {'width':'200', 'message':'Press h to return to hall', 'position':'-170 -50 -1.5', 'rotation':'10 30 5'}], {103:function(){return 5;}, 104:function(){return 1;}}, '0 0 0'],
+      4:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/handicap_hallway.png', [{'width':'10', 'message':'Press g to go back', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the techsuite', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 5;}, 104:function(){return 5;}}, '0 -130 0'],
+      5:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/techsuite.png',  [{'width':'10', 'message':'Press g to go back', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the techsuite', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 1;}, 104:function(){return 5;}}, '0 -130 0']};
       function _main_loop(){
+        //alert(current);
         var vals = sequence[current];
         $('#first_room').attr('src', vals[0])
+        var sceneEl = document.querySelector('a-scene');
+        val = sceneEl.querySelector("#first_room");
+        var listings = vals[3].split(' ');
+        val.setAttribute('rotation', {x:parseInt(listings[0]), y:parseInt(listings[1]), z:parseInt(listings[2])})
+        //$('#first_room').attr('rotation', vals[3]);
         if (_last_messages != undefined){
 
           for (var i = 0; i < _last_messages.length; i++){
+
             $('#message'+_last_messages[i]).remove();
           }
         }
@@ -37,8 +45,9 @@
         var _temp_container = [];
         func_commands = vals[2];
         for (var i = 0; i < vals[1].length; i++){
+          //alert(vals[1][i]['message']);
           var the_html = `
-          <a-text font="kelsonsans" value="${vals[1][i]['message']}" width="${vals[1][i]['width']}" id='message${i+1}' position="${vals[1][i]['position']}"
+          <a-text font="kelsonsans" value="${vals[1][i]['message']}" width="${vals[1][i]['width']}" color='black' id='message${i+1}' position="${vals[1][i]['position']}"
                   rotation="${vals[1][i]['rotation']}"></a-text>
           `;
           _temp_container.push((i+1).toString());
