@@ -20,10 +20,10 @@
       var func_commands = undefined;
       var sequence = {0:["https://raw.githubusercontent.com/Ajax12345/vr_testing/master/Image.png", [{'width':'5', 'message':'Out of order...', 'position':"-1.5 1.2 -1.5", 'rotation':"10 25 5"}, {'message':'Out of order...', 'width':'35', 'rotation':"10 25 2", 'position':"-38 1.2 -1.5"}, {'width':'8', 'message':'Press g to go down the hall', 'position':"0.1 1.6 -1.5", 'rotation':"-10 -6 -20"}], {103:function(){return 1;}}, '0 -130 0'],
 
-      1:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/hallway.png', [{'width':'10', 'message':'Press g to farther down', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the handicapped bathrooms', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 4;}, 104:function(){return 3;}}, '0 -130 0'],
-      2:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom_hallway.png', [{'width':'100', 'message':'something here', 'position':'0 0 0', 'rotation':'10 25 5'}], {103:function(){return 3;}, 104:function(){return 4;}}, '0 -130 0'],
-      3:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom.png', [{'width':'3', 'message':'Occupied', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Occupied', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}, {'width':'200', 'message':'Press h to return to hall', 'position':'-170 -50 -1.5', 'rotation':'10 30 5'}], {103:function(){return 5;}, 104:function(){return 1;}}, '0 0 0'],
-      4:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/handicap_hallway.png', [{'width':'10', 'message':'Press g to go back', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the techsuite', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 5;}, 104:function(){return 5;}}, '0 -130 0'],
+      1:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/hallway.png', [{'width':'10', 'message':'Press g to other hallway', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the handicapped bathrooms', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 2;}, 104:function(){return 4;}}, '0 -130 0'],
+      2:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom_hallway.png', [{'width':'6', 'message':'Press g to go into bathroom', 'position':'-1 1.2 -1.5', 'rotation':'10 1 1'}, {'width':'6', 'message':'Press h to go back', 'position':'-1 2 -1.5', 'rotation':'10 1 1'}], {103:function(){return 3;}, 104:function(){return 1;}}, '0 -130 0'],
+      3:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/bathroom.png', [{'width':'3', 'message':'Occupied', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Occupied', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}, {'width':'200', 'message':'Press h to return to hall', 'position':'-170 -50 -1.5', 'rotation':'10 30 5'}], {103:function(){return 5;}, 104:function(){return 2;}}, '0 0 0'],
+      4:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/handicap_hallway.png', [{'width':'10', 'message':'Press g to go back', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'4', 'message':'Occupied', 'position':'0.5 2 -2', 'rotation':'10 0 5'}, {'width':'200', 'message':'<-- Someone is taking a shower in this one!', 'position':'-100 6 -2', 'rotation':'1 50 0'}], {103:function(){return 1;}, 104:function(){return 1;}}, '0 -130 0'],
       5:['https://raw.githubusercontent.com/Ajax12345/vr_testing/master/techsuite.png',  [{'width':'10', 'message':'Press g to go back', 'position':'-1 1.2 -1.5', 'rotation':'10 25 5'}, {'width':'200', 'message':'Press h to go to the techsuite', 'position':'-110 1.2 -1.5', 'rotation':'10 30 5'}], {103:function(){return 1;}, 104:function(){return 5;}}, '0 -130 0']};
       function _main_loop(){
         //alert(current);
@@ -58,7 +58,7 @@
       }
       _main_loop();
       $(document).on('keypress', function(event) {
-
+        //alert(event.keyCode);
           current = func_commands[event.keyCode]();
 
           _main_loop();
